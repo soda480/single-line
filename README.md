@@ -3,6 +3,7 @@
 [![coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)](https://pybuilder.io/)
 [![complexity](https://img.shields.io/badge/complexity-A-brightgreen)](https://radon.readthedocs.io/en/latest/api.html#module-radon.complexity)
 [![vulnerabilities](https://img.shields.io/badge/vulnerabilities-None-brightgreen)](https://pypi.org/project/bandit/)
+[![PyPI version](https://badge.fury.io/py/single-line.svg)](https://badge.fury.io/py/single-line)
 [![python](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-teal)](https://www.python.org/downloads/)
 
 A context manager to facilitate printing messages to the same line. 
