@@ -8,8 +8,8 @@ class SingleLine(object):
 
     clear_eol = '\033[K'
 
-    def __init__(self, message_when_done=None, stream=sys.stdout):
-        self.message_when_done = '' if not message_when_done else message_when_done
+    def __init__(self, exit_message=None, stream=sys.stdout):
+        self.exit_message = '' if not exit_message else exit_message
         self.stream = stream
         just_fix_windows_console()
 
@@ -22,7 +22,7 @@ class SingleLine(object):
 
     def __exit__(self, *args):
         if self.stream.isatty():
-            self.write(self.message_when_done)
+            self.write(self.exit_message)
             cursor.show()
 
     def write(self, message, color=None):

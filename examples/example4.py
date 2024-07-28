@@ -11,5 +11,5 @@ async def do_some_work(worker, fake, line):
 async def run(line):
     await asyncio.gather(*(do_some_work(worker, Faker(), line) for worker in range(5)))
 
-with SingleLine(message_when_done='done with asyncio') as line:
+with SingleLine(exit_message='done with asyncio') as line:
     asyncio.run(run(line))

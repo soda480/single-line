@@ -30,7 +30,7 @@ with SingleLine() as line:
 
 ![example1](https://raw.githubusercontent.com/soda480/single-line/main/docs/images/example1.gif)
 
-Setting the `message_when_done` parameter will print the designated message when the context exits. The `write` method also supports colored messages via the [colorama](https://pypi.org/project/colorama/) module (so long as the stream is interactive); pass an optional `color` parameter with a dictionary containing the `fore`, `back` and `style` values.
+Setting the `exit_message` parameter will print the designated message when the context exits. The `write` method also supports colored messages via the [colorama](https://pypi.org/project/colorama/) module (so long as the stream is interactive); pass an optional `color` parameter with a dictionary containing the `fore`, `back` and `style` values.
 
 ```Python
 from time import sleep
@@ -38,7 +38,7 @@ from faker import Faker
 from colorama import Fore
 from single_line import SingleLine
 
-with SingleLine(message_when_done='done') as line:
+with SingleLine(exit_message='done') as line:
     for _ in range(25):
         line.write(Faker().sentence(), color={'fore': Fore.YELLOW})
         sleep(.15)
@@ -90,7 +90,7 @@ async def do_some_work(worker, fake, line):
 async def run(line):
     await asyncio.gather(*(do_some_work(worker, Faker(), line) for worker in range(5)))
 
-with SingleLine(message_when_done='done with asyncio') as line:
+with SingleLine(exit_message='done with asyncio') as line:
     asyncio.run(run(line))
 ```
 

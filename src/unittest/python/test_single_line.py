@@ -12,7 +12,7 @@ class TestSingleLine(unittest.TestCase):
     @patch('single_line.just_fix_windows_console')
     def test__init_Should_SetDefaults_When_Called(self, get_fill_patch, *patches):
         line = SingleLine()
-        self.assertEqual(line.message_when_done, '')
+        self.assertEqual(line.exit_message, '')
         self.assertEqual(line.stream, sys.stdout)
 
     @patch('single_line.sys.stdout.isatty', return_value=True)
@@ -20,7 +20,7 @@ class TestSingleLine(unittest.TestCase):
     @patch('single_line.print')
     @patch('single_line.cursor')
     def test__enter_exit_Should_HideAndShowCursor_When_Tty(self, cursor_patch, print_patch, write_patch, *patches):
-        with SingleLine(message_when_done='done'):
+        with SingleLine(exit_message='done'):
             cursor_patch.hide.assert_called_once_with()
             print_patch.assert_called_once_with('')
         write_patch.assert_called_once_with('done')
