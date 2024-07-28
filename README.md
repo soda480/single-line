@@ -15,7 +15,7 @@ pip install single-line
 
 ## Usage
 
-Using the `SingleLine` context manager all calls to its `print` method will print the message to the same line. A common use case will be to use it in conjuction with a for loop as follows.
+Using the `SingleLine` context manager all calls to its `write` method will print the message to the same line. A common use case is to use it in conjuction with a for loop.
 
 ```Python
 from time import sleep
@@ -24,13 +24,13 @@ from single_line import SingleLine
 
 with SingleLine() as line:
     for _ in range(25):
-        line.print(Faker().sentence())
+        line.write(Faker().sentence())
         sleep(.15)
 ```
 
 ![example1](https://raw.githubusercontent.com/soda480/single-line/main/docs/images/example1.gif)
 
-Setting the `message_when_done` parameter will print the designated message when the context exits. The `print` method also supports colored messages via the [colorama](https://pypi.org/project/colorama/) module (so long as the stream is interactive); pass an optional `color` parameter with a dictionary containing the `fore`, `back` and `style` values.
+Setting the `message_when_done` parameter will print the designated message when the context exits. The `write` method also supports colored messages via the [colorama](https://pypi.org/project/colorama/) module (so long as the stream is interactive); pass an optional `color` parameter with a dictionary containing the `fore`, `back` and `style` values.
 
 ```Python
 from time import sleep
@@ -40,7 +40,7 @@ from single_line import SingleLine
 
 with SingleLine(message_when_done='done') as line:
     for _ in range(25):
-        line.print(Faker().sentence(), color={'fore': Fore.YELLOW})
+        line.write(Faker().sentence(), color={'fore': Fore.YELLOW})
         sleep(.15)
 
 ```
@@ -68,7 +68,7 @@ def get_random_style():
 
 with SingleLine(stream=sys.stderr) as line:
     for _ in range(25):
-        line.print(Faker().sentence(), color={'fore': get_random_fore(), 'back': get_random_back(), 'style': get_random_style()})
+        line.write(Faker().sentence(), color={'fore': get_random_fore(), 'back': get_random_back(), 'style': get_random_style()})
         sleep(.15)
 ```
 
@@ -85,7 +85,7 @@ from single_line import SingleLine
 async def do_some_work(worker, fake, line):
     for index in range(random.randint(10, 35)):
         await asyncio.sleep(random.choice([.5, .1, .25]))
-        line.print(f'worker{worker} {fake.sentence()}')
+        line.write(f'worker{worker} {fake.sentence()}')
 
 async def run(line):
     await asyncio.gather(*(do_some_work(worker, Faker(), line) for worker in range(5)))

@@ -16,14 +16,14 @@ class TestSingleLine(unittest.TestCase):
         self.assertEqual(line.stream, sys.stdout)
 
     @patch('single_line.sys.stdout.isatty', return_value=True)
-    @patch('single_line.SingleLine.print')
+    @patch('single_line.SingleLine.write')
     @patch('single_line.print')
     @patch('single_line.cursor')
-    def test__enter_exit_Should_HideAndShowCursor_When_Tty(self, cursor_patch, print_patch, line_print_patch, *patches):
+    def test__enter_exit_Should_HideAndShowCursor_When_Tty(self, cursor_patch, print_patch, write_patch, *patches):
         with SingleLine(message_when_done='done'):
             cursor_patch.hide.assert_called_once_with()
             print_patch.assert_called_once_with('')
-        line_print_patch.assert_called_once_with('done')
+        write_patch.assert_called_once_with('done')
         cursor_patch.show.assert_called_once_with()
 
     @patch('single_line.sys.stdout.isatty', return_value=True)
@@ -32,9 +32,9 @@ class TestSingleLine(unittest.TestCase):
     @patch('single_line.Style')
     @patch('single_line.Cursor')
     @patch('single_line.print')
-    def test__print_Should_PrintMessage_When_Tty(self, print_patch, cursor_patch, *patches):
+    def test__write_Should_PrintMessage_When_Tty(self, print_patch, cursor_patch, *patches):
         line = SingleLine()
-        line.print('message')
+        line.write('message')
         self.assertEqual(len(print_patch.mock_calls), 2)
         mockstr = f'{cursor_patch.UP.return_value}{line.clear_eol}'
         self.assertTrue(call(mockstr, end='', file=line.stream) in print_patch.mock_calls)

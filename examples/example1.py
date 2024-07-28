@@ -4,5 +4,5 @@ from single_line import SingleLine
 
 with SingleLine() as line:
     for _ in range(25):
-        line.print(Faker().sentence())
+        line.write(Faker().sentence())
         sleep(.15)

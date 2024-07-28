@@ -22,10 +22,10 @@ class SingleLine(object):
 
     def __exit__(self, *args):
         if self.stream.isatty():
-            self.print(self.message_when_done)
+            self.write(self.message_when_done)
             cursor.show()
 
-    def print(self, message, color=None):
+    def write(self, message, color=None):
         _message = message
         if self.stream.isatty():
             print(f'{Cursor.UP(1)}{self.clear_eol}', end='', file=self.stream)
