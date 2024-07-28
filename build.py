@@ -16,7 +16,7 @@ name = 'single-line'
 authors = [Author('Emilio Reyes', 'soda480@gmail.com')]
 summary = 'A context manager to facilitate printing messages to the same line'
 url = 'https://github.com/soda480/single-line'
-version = '1.0.0'
+version = '1.1.0'
 default_task = [
     'clean',
     'analyze',

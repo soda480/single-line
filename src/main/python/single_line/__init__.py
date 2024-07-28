@@ -29,12 +29,12 @@ class SingleLine(object):
             cursor.show()
 
     def print(self, message, color=None):
-        if self.single_line:
-            print(f'{Cursor.UP(1)}{self.clear_eol}', end='', file=self.stream)
-            if not color:
-                color = {'fore': Fore.RESET, 'back': Back.RESET, 'style': Style.NORMAL}
-            _color = color.get('fore', Fore.RESET) + color.get('back', Back.RESET) + color.get('style', Style.NORMAL)
-            _message = f'{_color}{message}{Style.RESET_ALL}'
-        else:
-            _message = message
+        _message = message
+        if self.stream.isatty():
+            if self.single_line:
+                print(f'{Cursor.UP(1)}{self.clear_eol}', end='', file=self.stream)
+                if not color:
+                    color = {}
+                _color = color.get('fore', Fore.RESET) + color.get('back', Back.RESET) + color.get('style', Style.NORMAL)
+                _message = f'{_color}{message}{Style.RESET_ALL}'
         print(_message, file=self.stream, flush=True)

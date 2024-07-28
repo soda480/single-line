@@ -6,7 +6,7 @@
 [![PyPI version](https://badge.fury.io/py/single-line.svg)](https://badge.fury.io/py/single-line)
 [![python](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-teal)](https://www.python.org/downloads/)
 
-A context manager to facilitate printing messages to the same line. 
+A context manager to facilitate printing messages to the same line.
 
 ## Installation
 ```bash
@@ -30,8 +30,7 @@ with SingleLine() as line:
 
 ![example1](https://raw.githubusercontent.com/soda480/single-line/main/docs/images/example1.gif)
 
-
-Setting `message_when_done` parameter will print a prescribed message when the context is done. The `print` method also supports printing colored messages via the [colorama](https://pypi.org/project/colorama/) module, just pass the method an optional `color` parameter consiting of a dictionary describing the `fore`, `back` and `style` you wish to the message to be printed with.
+Setting the `message_when_done` parameter will print the designated message when the context exits. The `print` method also supports colored messages via the [colorama](https://pypi.org/project/colorama/) module (so long as the stream is interactive); pass an optional `color` parameter with a dictionary containing the `fore`, `back` and `style` values.
 
 ```Python
 from time import sleep
@@ -48,7 +47,7 @@ with SingleLine(message_when_done='done') as line:
 
 ![example2](https://raw.githubusercontent.com/soda480/single-line/main/docs/images/example2.gif)
 
-By default messages will be printed out to `sys.stdout` but you can print to any object with a write(string) method. This example also shows the extent of using colors when printing messages.
+By default messages will be printed out to the sys.stdout stream but you can designate sys.stderr by setting the `stream` parameter. This example also shows the extent of using colors when printing messages.
 
 ```Python
 import sys
