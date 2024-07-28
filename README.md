@@ -47,7 +47,7 @@ with SingleLine(exit_message='done') as line:
 
 ![example2](https://raw.githubusercontent.com/soda480/single-line/main/docs/images/example2.gif)
 
-By default messages will be printed out to the sys.stdout stream but you can designate sys.stderr by setting the `stream` parameter. This example also shows the extent of using colors when printing messages.
+By default messages will be printed out to the sys.stdout stream but you can designate sys.stderr by setting the `stream` parameter. Note if stream is not connected to an interactive terminal device 'SingleLine` will simply print the message, color and cursor directives will be ignored. This example also shows the extent of using colors when printing messages.
 
 ```Python
 import sys
