@@ -6,7 +6,7 @@
 [![PyPI version](https://badge.fury.io/py/single-line.svg)](https://badge.fury.io/py/single-line)
 [![python](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-teal)](https://www.python.org/downloads/)
 
-A context manager to facilitate printing messages to the same line. 
+A context manager to facilitate printing messages to the same line.
 
 ## Installation
 ```bash
@@ -15,7 +15,7 @@ pip install single-line
 
 ## Usage
 
-Using the `SingleLine` context manager all calls to its `print` method will print the message to the same line. A common use case will be to use it in conjuction with a for loop as follows.
+Using the `SingleLine` context manager all calls to its `write` method will print the message to the same line. A common use case is to use it in conjuction with a for loop.
 
 ```Python
 from time import sleep
@@ -24,14 +24,13 @@ from single_line import SingleLine
 
 with SingleLine() as line:
     for _ in range(25):
-        line.print(Faker().sentence())
+        line.write(Faker().sentence())
         sleep(.15)
 ```
 
 ![example1](https://raw.githubusercontent.com/soda480/single-line/main/docs/images/example1.gif)
 
-
-Setting `message_when_done` parameter will print a prescribed message when the context is done. The `print` method also supports printing colored messages via the [colorama](https://pypi.org/project/colorama/) module, just pass the method an optional `color` parameter consiting of a dictionary describing the `fore`, `back` and `style` you wish to the message to be printed with.
+Setting the `exit_message` parameter will print the designated message when the context exits. The `write` method also supports colored messages via the [colorama](https://pypi.org/project/colorama/) module (so long as the stream is interactive); pass an optional `color` parameter with a dictionary containing the `fore`, `back` and `style` values.
 
 ```Python
 from time import sleep
@@ -39,16 +38,16 @@ from faker import Faker
 from colorama import Fore
 from single_line import SingleLine
 
-with SingleLine(message_when_done='done') as line:
+with SingleLine(exit_message='done') as line:
     for _ in range(25):
-        line.print(Faker().sentence(), color={'fore': Fore.YELLOW})
+        line.write(Faker().sentence(), color={'fore': Fore.YELLOW})
         sleep(.15)
 
 ```
 
 ![example2](https://raw.githubusercontent.com/soda480/single-line/main/docs/images/example2.gif)
 
-By default messages will be printed out to `sys.stdout` but you can print to any object with a write(string) method. This example also shows the extent of using colors when printing messages.
+By default messages will be printed out to the sys.stdout stream but you can designate sys.stderr by setting the `stream` parameter. Note if stream is not connected to an interactive terminal device 'SingleLine` will simply print the message, color and cursor directives will be ignored. This example also shows the extent of using colors when printing messages.
 
 ```Python
 import sys
@@ -69,7 +68,7 @@ def get_random_style():
 
 with SingleLine(stream=sys.stderr) as line:
     for _ in range(25):
-        line.print(Faker().sentence(), color={'fore': get_random_fore(), 'back': get_random_back(), 'style': get_random_style()})
+        line.write(Faker().sentence(), color={'fore': get_random_fore(), 'back': get_random_back(), 'style': get_random_style()})
         sleep(.15)
 ```
 
@@ -86,12 +85,12 @@ from single_line import SingleLine
 async def do_some_work(worker, fake, line):
     for index in range(random.randint(10, 35)):
         await asyncio.sleep(random.choice([.5, .1, .25]))
-        line.print(f'worker{worker} {fake.sentence()}')
+        line.write(f'worker{worker} {fake.sentence()}')
 
 async def run(line):
     await asyncio.gather(*(do_some_work(worker, Faker(), line) for worker in range(5)))
 
-with SingleLine(message_when_done='done with asyncio') as line:
+with SingleLine(exit_message='done with asyncio') as line:
     asyncio.run(run(line))
 ```
 

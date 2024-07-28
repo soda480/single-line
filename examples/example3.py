@@ -16,5 +16,5 @@ def get_random_style():
 
 with SingleLine(stream=sys.stderr) as line:
     for _ in range(25):
-        line.print(Faker().sentence(), color={'fore': get_random_fore(), 'back': get_random_back(), 'style': get_random_style()})
+        line.write(Faker().sentence(), color={'fore': get_random_fore(), 'back': get_random_back(), 'style': get_random_style()})
         sleep(.15)
