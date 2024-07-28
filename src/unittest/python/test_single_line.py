@@ -12,7 +12,6 @@ class TestSingleLine(unittest.TestCase):
     @patch('single_line.just_fix_windows_console')
     def test__init_Should_SetDefaults_When_Called(self, get_fill_patch, *patches):
         line = SingleLine()
-        self.assertTrue(line.single_line)
         self.assertEqual(line.message_when_done, '')
         self.assertEqual(line.stream, sys.stdout)
 
@@ -28,19 +27,12 @@ class TestSingleLine(unittest.TestCase):
         cursor_patch.show.assert_called_once_with()
 
     @patch('single_line.sys.stdout.isatty', return_value=True)
-    @patch('single_line.print')
-    def test__print_Should_PrintMessage_When_SingleLineFalse(self, print_patch, *patches):
-        line = SingleLine(single_line=False)
-        line.print('message')
-        print_patch.assert_called_once_with('message', file=line.stream, flush=True)
-
-    @patch('single_line.sys.stdout.isatty', return_value=True)
     @patch('single_line.Fore')
     @patch('single_line.Back')
     @patch('single_line.Style')
     @patch('single_line.Cursor')
     @patch('single_line.print')
-    def test__print_Should_PrintMessage_When_SingleLineTrue(self, print_patch, cursor_patch, *patches):
+    def test__print_Should_PrintMessage_When_Tty(self, print_patch, cursor_patch, *patches):
         line = SingleLine()
         line.print('message')
         self.assertEqual(len(print_patch.mock_calls), 2)
